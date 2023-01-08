@@ -17,7 +17,7 @@ const createNote = async (req, res)=>{
         console.log("try line 12");
     } catch (error){
         console.log(error)
-        res.status(501).json({message: "Something went Wrong notecontroller 17"});
+        res.status(501).json({message: "Something went Wrong notecontroller 20"});
     }
 
 }
@@ -32,6 +32,8 @@ const updateNote = async (req, res)=>{
     }
     try{
         await noteModel.findByIdAndUpdate(id, newNote,{new: true});
+        res.status(200).json(newNote);
+
 
     }catch{ (error)
         console.log(error);
@@ -41,7 +43,16 @@ const updateNote = async (req, res)=>{
 
 
 }
-const deleteNote =(req, res)=>{
+const deleteNote = async (req, res)=>{
+    const id = req.params.id;
+    try{
+        const note = await noteModel.findByIdAndRemove(id);
+        res.status(202).json(note);
+
+    } catch{
+        console.log(error);
+        res.status(500).json({message: "Something went Wrong notecontroller 52"});
+    }
     
 
 }
@@ -52,7 +63,7 @@ const getNotes  =async (req, res)=>{
     }
     catch (error){
         console.log(error);
-        res.status(501).json({message: "Something went Wrong notecontroller 34"});
+        res.status(501).json({message: "Something went Wrong notecontroller 64"});
     }
 
 }
