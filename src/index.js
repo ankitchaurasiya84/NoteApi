@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+
+dotenv.config({path: './.env'});
 const express = require("express");
 const app = express();
 const noteRouter = require("./routes/noteRoutes");
@@ -12,7 +15,7 @@ app.use((req, res, next) => {
 });
 app.use("/users", userRouter);
 app.use("/note", noteRouter);
-mongoose.connect("mongodb+srv://ankit:ankitpassword@cluster0.sb0kqhr.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect(process.env.DB_KEY)
   .then(() => {
     app.listen(5000, () => {
       console.log(" SERVER started port no 5000");
