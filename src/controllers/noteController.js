@@ -1,5 +1,4 @@
 const noteModel = require("../models/note");
-
 const createNote = async (req, res)=>{
     const {title, description}=req.body;
     const newNote = new noteModel({
@@ -7,7 +6,7 @@ const createNote = async (req, res)=>{
         description: description,
         userId: req.userId
     });
-
+    
     try{
         console.log("try line 12")
         

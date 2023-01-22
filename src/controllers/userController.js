@@ -1,8 +1,7 @@
 const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
-
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "NOTEAPI";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const signup = async (req, res) => {
     const { username, email, password } = req.body;  // Existing user
@@ -12,7 +11,7 @@ const signup = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10); // hash password
-        // const hashedPassword = await bcrypt.hash(password,10);
+       
         const result = await userModel.create({               // user Create
             email: email,
             password: hashedPassword,
@@ -38,7 +37,7 @@ const signin = async (req, res) => {
             return res.status(400).json({ message: "Invalid Credential" });
         }
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, SECRET_KEY);
-        res.status(201).json({ user: existingUser, token: token });
+        res.status(200).json({ user: existingUser, token: token });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });
